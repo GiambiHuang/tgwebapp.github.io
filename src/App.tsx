@@ -1,12 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import WebApp from '@twa-dev/sdk'
+import { TonConnectUI } from '@tonconnect/ui';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [ui, setUI] = useState<any>(null);
 
+  async function connectToWallet() {
+    const connectedWallet = await ui.connectWallet();
+    // 如果需要，可以对connectedWallet做一些事情
+    console.log(connectedWallet);
+  }
+  useEffect(() => {
+    const tonConnectUI = new TonConnectUI({
+      manifestUrl: 'https://<YOUR_APP_URL>/tonconnect-manifest.json',
+    });
+    setUI(tonConnectUI);
+  }, []);
   return (
     <>
       <div>
@@ -25,8 +38,8 @@ function App() {
       </div>
         {/* Here we add our button with alert callback */}
       <div className="card">
-        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>
-            Show Alert
+        <button onClick={connectToWallet}>
+            Connect Wallet
         </button>
       </div>
     </>
