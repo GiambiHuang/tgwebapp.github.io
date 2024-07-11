@@ -43,9 +43,17 @@ function App() {
       </div>
         {/* Here we add our button with alert callback */}
       <div className="card">
-        <button onClick={connectToWallet}>
-            Connect Wallet
-        </button>
+        {
+          ui?.connected ? (
+            <button onClick={() => { ui.disconnect() }}>
+              Disconnect Wallet
+            </button>
+          ) : (
+            <button onClick={connectToWallet}>
+              Connect Wallet
+            </button>
+          )
+        }
       </div>
     </>
   )
