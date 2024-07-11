@@ -14,7 +14,7 @@ function App() {
     const connectedWallet = await ui.connectWallet();
     // 如果需要，可以对connectedWallet做一些事情
     console.log(connectedWallet);
-    setList(JSON.stringify(connectedWallet));
+    setList(JSON.stringify(connectedWallet.account));
   }
   useEffect(() => {
     const tonConnectUI = new TonConnectUI({
@@ -38,7 +38,7 @@ function App() {
           count is {count}
         </button>
       </div>
-      <div style={{ color: 'white' }}>
+      <div style={{ color: 'white', maxWidth: '250px' }}>
         {list}
       </div>
         {/* Here we add our button with alert callback */}
