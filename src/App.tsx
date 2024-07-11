@@ -6,12 +6,15 @@ import { TonConnectUI } from '@tonconnect/ui';
 
 function App() {
   const [count, setCount] = useState(0);
+  const [list, setList] = useState('');
   const [ui, setUI] = useState<any>(null);
 
   async function connectToWallet() {
+    // const out = ui.setConnectRequestParameters({state: 'ready', value: 'tttttttt' });
     const connectedWallet = await ui.connectWallet();
     // 如果需要，可以对connectedWallet做一些事情
     console.log(connectedWallet);
+    setList(JSON.stringify(connectedWallet));
   }
   useEffect(() => {
     const tonConnectUI = new TonConnectUI({
@@ -34,6 +37,9 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+      </div>
+      <div style={{ color: 'white' }}>
+        {list}
       </div>
         {/* Here we add our button with alert callback */}
       <div className="card">
