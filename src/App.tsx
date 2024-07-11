@@ -18,7 +18,7 @@ function App() {
   }
   useEffect(() => {
     const tonConnectUI = new TonConnectUI({
-      manifestUrl: 'https://<YOUR_APP_URL>/tonconnect-manifest.json',
+      manifestUrl: 'https://giambihuang.github.io/tgwebapp.github.io/tonconnect-manifest.json',
     });
     setUI(tonConnectUI);
   }, []);
