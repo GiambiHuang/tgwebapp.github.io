@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import WebApp from '@twa-dev/sdk'
 import './index.css'
+import { TonConnectUIProvider } from '@tonconnect/ui-react'
 
 WebApp.ready();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <TonConnectUIProvider manifestUrl='https://giambihuang.github.io/tgwebapp.github.io/tonconnect-manifest.json'>
+      <App />
+    </TonConnectUIProvider>
   </React.StrictMode>,
 )

@@ -2,25 +2,38 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { TonConnectUI } from '@tonconnect/ui';
+import { TonConnectButton, useTonAddress, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 
 function App() {
   const [count, setCount] = useState(0);
-  const [list, setList] = useState('');
-  const [ui, setUI] = useState<any>(null);
+  const tonAddress = useTonAddress();
+  const [tonConnectUI] = useTonConnectUI();
+  const tonWallet = useTonWallet();
 
-  async function connectToWallet() {
-    // const out = ui.setConnectRequestParameters({state: 'ready', value: 'tttttttt' });
-    const connectedWallet = await ui.connectWallet();
-    // 如果需要，可以对connectedWallet做一些事情
-    console.log(connectedWallet);
-    setList(JSON.stringify(connectedWallet.account));
+  console.log('tonAddress:', tonAddress);
+  console.log('tonConnectUI:', tonConnectUI);
+  console.log('tonWallet:', tonWallet?.connectItems)
+  // async function connectToWallet() {
+  //   // const out = ui.setConnectRequestParameters({state: 'ready', value: 'tttttttt' });
+  //   const connectedWallet = await ui.connectWallet();
+  //   // 如果需要，可以对connectedWallet做一些事情
+  //   console.log(connectedWallet);
+  //   setList(JSON.stringify(connectedWallet.account));
+  // }
+  const handleConnect = () => {
+    tonConnectUI.setConnectRequestParameters({
+      state: 'ready',
+      value: {
+        tonProof: 'zyppppppp'
+      }
+    });
+    tonConnectUI.openModal();
   }
   useEffect(() => {
-    const tonConnectUI = new TonConnectUI({
-      manifestUrl: 'https://giambihuang.github.io/tgwebapp.github.io/tonconnect-manifest.json',
-    });
-    setUI(tonConnectUI);
+    // const tonConnectUI = new TonConnectUI({
+    //   manifestUrl: 'https://giambihuang.github.io/tgwebapp.github.io/tonconnect-manifest.json',
+    // });
+    // setUI(tonConnectUI);
   }, []);
   return (
     <>
@@ -39,21 +52,20 @@ function App() {
         </button>
       </div>
       <div style={{ color: 'white', maxWidth: '250px' }}>
-        {list}
+        <ul>
+          {Object.entries(tonWallet?.connectItems?.tonProof ?? {}).map(([key, value]) => (
+            <li key={key}>
+              {key}: {typeof value === 'object' ? JSON.stringify(value) : value}
+            </li>
+          ))}
+        </ul>
       </div>
         {/* Here we add our button with alert callback */}
+        <div>
+          <button onClick={handleConnect}>GOOOO</button>
+        </div>
       <div className="card">
-        {
-          ui?.connected ? (
-            <button onClick={() => { ui.disconnect() }}>
-              Disconnect Wallet
-            </button>
-          ) : (
-            <button onClick={connectToWallet}>
-              Connect Wallet
-            </button>
-          )
-        }
+        <TonConnectButton />
       </div>
     </>
   )
